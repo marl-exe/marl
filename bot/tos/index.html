@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Terms of Service for marl's Discord bot." />
+  <link rel="canonical" href="https://marlrivera.com/bot/tos/" />
+  <title>Discord Bot — Terms of Service</title>
+
+  <style>
+    :root {
+      color-scheme: light dark;
+      --bg: #f3f0e8;
+      --panel: rgba(255, 255, 255, .62);
+      --text: #171717;
+      --muted: #706c64;
+      --line: rgba(23, 23, 23, .14);
+      --accent: #5865f2;
+      --shadow: 0 12px 35px rgba(0, 0, 0, .05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0d0e12;
+        --panel: rgba(255, 255, 255, .045);
+        --text: #f6f6f7;
+        --muted: #a5a6ad;
+        --line: rgba(255, 255, 255, .14);
+        --accent: #8b95ff;
+        --shadow: 0 12px 35px rgba(0, 0, 0, .22);
+      }
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    .wrap {
+      width: min(820px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 42px 0 64px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 16px;
+      margin-bottom: 42px;
+      font-size: 13px;
+    }
+
+    .brand {
+      color: var(--text);
+      font-weight: 750;
+      text-decoration: none;
+      letter-spacing: -.02em;
+    }
+
+    .navlinks {
+      display: flex;
+      gap: 16px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+
+    .navlinks a {
+      color: var(--muted);
+      text-decoration: none;
+    }
+
+    .navlinks a:hover { color: var(--text); }
+
+    .eyebrow {
+      margin: 0 0 10px;
+      color: var(--accent);
+      font-size: 11px;
+      font-weight: 750;
+      letter-spacing: .13em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(38px, 7vw, 64px);
+      line-height: .98;
+      letter-spacing: -.055em;
+    }
+
+    .lede {
+      max-width: 680px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 17px;
+      line-height: 1.6;
+    }
+
+    .meta {
+      margin-top: 14px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+
+    .summary {
+      margin: 30px 0 18px;
+      padding: 20px;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .summary strong {
+      display: block;
+      margin-bottom: 6px;
+      font-size: 18px;
+    }
+
+    .summary p {
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+
+    section {
+      padding: 24px 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    h2 {
+      margin: 0 0 12px;
+      font-size: 21px;
+      letter-spacing: -.025em;
+    }
+
+    p, li {
+      color: var(--muted);
+      font-size: 15px;
+      line-height: 1.7;
+    }
+
+    p { margin: 0 0 12px; }
+    p:last-child { margin-bottom: 0; }
+
+    ul {
+      margin: 8px 0 0;
+      padding-left: 22px;
+    }
+
+    li + li { margin-top: 7px; }
+    a { color: var(--accent); }
+
+    code {
+      padding: 2px 6px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      color: var(--text);
+      background: var(--panel);
+      font: inherit;
+      font-size: .9em;
+    }
+
+    footer {
+      padding-top: 28px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.6;
+    }
+  </style>
+</head>
+<body>
+  <main class="wrap">
+    <nav>
+      <a class="brand" href="https://marlrivera.com/">Discord Bot</a>
+      <div class="navlinks">
+        <a href="https://marlrivera.com/bot/policy/">Privacy</a>
+        <a href="https://marlrivera.com/">marlrivera.com</a>
+      </div>
+    </nav>
+
+    <header>
+      <p class="eyebrow">Terms of Service</p>
+      <h1>Discord Bot</h1>
+      <p class="lede">
+        These Terms govern use of the Discord bot and its server automation features, including role management, voice-channel management, and bot commands.
+      </p>
+      <p class="meta">Last updated: September 11, 2026</p>
+    </header>
+
+    <div class="summary">
+      <strong>The short version</strong>
+      <p>
+        Use the bot responsibly, follow Discord's rules, grant only the permissions you are comfortable with, and do not use the bot for abuse, spam, harassment, or unlawful activity. The bot is provided as-is and may change or experience downtime.
+      </p>
+    </div>
+
+    <section>
+      <h2>1. Acceptance of these Terms</h2>
+      <p>By adding the bot to a Discord server, configuring it, or using its commands or features, you agree to these Terms of Service and the associated <a href="https://marlrivera.com/bot/policy/">Privacy Policy</a>.</p>
+      <p>If you do not agree with these Terms, do not use the bot.</p>
+    </section>
+
+    <section>
+      <h2>2. Eligibility and Discord rules</h2>
+      <p>You must be permitted to use Discord and must comply with Discord's Terms of Service, Community Guidelines, Developer Terms, and other applicable Discord policies.</p>
+      <p>Server owners and administrators are responsible for ensuring that their configuration and use of the bot is appropriate for their server and members.</p>
+    </section>
+
+    <section>
+      <h2>3. Bot functionality</h2>
+      <p>The bot may provide features including:</p>
+      <ul>
+        <li>Role assignment and role-management automation</li>
+        <li>Voice-channel creation, management, and cleanup</li>
+        <li>Server-specific configuration</li>
+        <li>Slash commands, help commands, and other Discord interactions</li>
+        <li>Administrative automation and related utility features</li>
+      </ul>
+      <p>Features may be added, changed, limited, or removed over time.</p>
+    </section>
+
+    <section>
+      <h2>4. Permissions</h2>
+      <p>The bot may require Discord permissions to perform configured actions. Server owners and administrators are responsible for reviewing and granting those permissions.</p>
+      <p>You should grant only the permissions necessary for the features you intend to use. The bot must not be used to bypass Discord's permission system or another user's legitimate access restrictions.</p>
+    </section>
+
+    <section>
+      <h2>5. Acceptable use</h2>
+      <p>You may not use the bot to:</p>
+      <ul>
+        <li>Break applicable laws or regulations</li>
+        <li>Violate Discord's rules or policies</li>
+        <li>Harass, threaten, impersonate, stalk, or abuse others</li>
+        <li>Send spam or conduct malicious automation</li>
+        <li>Attempt to exploit, disrupt, overload, reverse engineer, or gain unauthorized access to the bot or its infrastructure</li>
+        <li>Use the bot to distribute malware, phishing content, or other harmful material</li>
+        <li>Interfere with other servers, users, or services</li>
+      </ul>
+    </section>
+
+    <section>
+      <h2>6. Server configuration and administrator responsibility</h2>
+      <p>Administrators are responsible for configuration choices they make through the bot, including role assignments, voice-channel behavior, permissions, and other automated actions.</p>
+      <p>You are responsible for reviewing your server's configuration and for correcting or disabling automation that does not behave as intended.</p>
+    </section>
+
+    <section>
+      <h2>7. Availability and changes</h2>
+      <p>The bot is provided on an as-available basis. Continuous uptime, uninterrupted operation, or permanent availability of any specific feature is not guaranteed.</p>
+      <p>Maintenance, Discord API changes, infrastructure issues, abuse prevention, or development changes may temporarily or permanently affect the bot.</p>
+    </section>
+
+    <section>
+      <h2>8. Suspension or termination</h2>
+      <p>Access to the bot may be restricted, suspended, or terminated for abuse, security concerns, violations of these Terms, violations of Discord policies, or conduct that threatens the bot or other users.</p>
+      <p>You may stop using the bot at any time by disabling its features or removing it from your Discord server.</p>
+    </section>
+
+    <section>
+      <h2>9. Privacy</h2>
+      <p>The bot processes limited Discord information needed to provide its features. Details about what information may be processed, how it is used, and how deletion requests are handled are described in the <a href="https://marlrivera.com/bot/policy/">Privacy Policy</a>.</p>
+    </section>
+
+    <section>
+      <h2>10. Third-party services</h2>
+      <p>The bot depends on Discord and may depend on third-party hosting or infrastructure services. Those services are operated independently and may be subject to their own terms and privacy policies.</p>
+      <p>The developer is not responsible for outages, policy changes, or actions taken by those third-party services.</p>
+    </section>
+
+    <section>
+      <h2>11. Disclaimer of warranties</h2>
+      <p>To the extent permitted by applicable law, the bot is provided "as is" and "as available" without warranties of any kind, whether express or implied.</p>
+      <p>No guarantee is made that the bot will always be accurate, available, error-free, secure, or suitable for every server configuration.</p>
+    </section>
+
+    <section>
+      <h2>12. Limitation of liability</h2>
+      <p>To the extent permitted by applicable law, the developer will not be liable for indirect, incidental, special, consequential, or punitive damages arising from use of, inability to use, or reliance on the bot.</p>
+      <p>Server owners and administrators remain responsible for their Discord server, permissions, moderation decisions, and configuration choices.</p>
+    </section>
+
+    <section>
+      <h2>13. Changes to these Terms</h2>
+      <p>These Terms may be updated as the bot changes. The "Last updated" date at the top of this page will be revised when material changes are made. Continued use of the bot after an update constitutes acceptance of the revised Terms.</p>
+    </section>
+
+    <section>
+      <h2>14. Contact</h2>
+      <p>The bot is developed and maintained by marl. Questions about these Terms can be sent to <a href="mailto:dev@marlrivera.com">dev@marlrivera.com</a>.</p>
+    </section>
+
+    <footer>
+      Discord Bot Terms of Service &mdash; <a href="https://marlrivera.com/bot/policy/">Privacy Policy</a>
+    </footer>
+  </main>
+</body>
+</html>
