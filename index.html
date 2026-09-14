@@ -227,12 +227,54 @@
 
     footer {
       display: flex;
-      justify-content: space-between;
-      gap: 12px;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 8px;
       margin-top: 12px;
       padding: 0 2px;
       font-size: 11px;
       color: var(--muted);
+    }
+
+    .footer-separator {
+      opacity: .48;
+    }
+
+    .footer-apps {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+    }
+
+    .footer-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+      transition: color .15s ease, transform .15s ease;
+    }
+
+    .footer-app:hover {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .footer-icon {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #footerMessage,
+    #clock {
+      white-space: nowrap;
     }
 
     #toast {
@@ -359,7 +401,11 @@
       .grid { grid-template-columns: 1fr; }
       .wide { grid-column: auto; }
       .mini-stats { grid-template-columns: repeat(2,1fr); }
-      footer { flex-direction: column; }
+      footer { gap: 7px 9px; }
+      .footer-separator { display: none; }
+      .footer-apps { flex-wrap: wrap; gap: 8px 12px; }
+      #footerMessage,
+      #clock { white-space: normal; text-align: center; }
     }
   </style>
 </head>
@@ -423,6 +469,35 @@
 
     <footer>
       <span id="footerMessage">Last updated whenever I remembered this exists.</span>
+      <span class="footer-separator" aria-hidden="true">·</span>
+      <span class="footer-apps" aria-label="Apps">
+        <span class="footer-app" title="Receipt2Cloud">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.5 3.5h8l3 3v5" />
+            <path d="M14.5 3.5v3h3" />
+            <path d="M6.5 3.5v17l2-1.2 2 1.2 2-1.2 2 1.2" />
+            <path d="M13.5 16.8h4.2a2.8 2.8 0 0 0 .4-5.6 4 4 0 0 0-7.5 1.6 2.1 2.1 0 0 0 .8 4" />
+          </svg>
+          <span>Receipt2Cloud</span>
+        </span>
+        <span class="footer-app" title="FileClean">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3.5h8l4 4v13H6z" />
+            <path d="M14 3.5v4h4" />
+            <path d="M10 13l.7 1.8 1.8.7-1.8.7L10 18l-.7-1.8-1.8-.7 1.8-.7z" />
+          </svg>
+          <span>FileClean</span>
+        </span>
+        <span class="footer-app" title="Stock Checker">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="5.5" />
+            <path d="M14.5 14.5L20 20" />
+            <path d="M8 10.5h5" />
+          </svg>
+          <span>Stock Checker</span>
+        </span>
+      </span>
+      <span class="footer-separator" aria-hidden="true">·</span>
       <span id="clock">00:00:00 — still no content</span>
     </footer>
   </main>
