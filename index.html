@@ -48,37 +48,12 @@
 
     nav {
       display: flex;
-      justify-content: space-between;
+      justify-content: flex-end;
       align-items: center;
       gap: 12px;
       margin-bottom: 34px;
       font-size: 12px;
       color: var(--muted);
-    }
-
-    .badge {
-      display: inline-flex;
-      align-items: center;
-      gap: 7px;
-      padding: 6px 10px;
-      border: 1px solid var(--line);
-      border-radius: 999px;
-      background: var(--panel);
-    }
-
-    .dot {
-      width: 7px;
-      height: 7px;
-      border-radius: 50%;
-      background: #59b85c;
-    }
-
-    #statusText {
-      transition: opacity .18s ease;
-    }
-
-    #statusText.fade {
-      opacity: .28;
     }
 
     button { font: inherit; }
@@ -226,19 +201,19 @@
     }
 
     footer {
-      display: flex;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
       align-items: center;
-      justify-content: center;
-      flex-wrap: wrap;
-      gap: 8px;
+      gap: 16px;
       margin-top: 12px;
       padding: 0 2px;
       font-size: 11px;
       color: var(--muted);
     }
 
-    .footer-separator {
-      opacity: .48;
+    #footerMessage {
+      justify-self: start;
+      white-space: nowrap;
     }
 
     .footer-apps {
@@ -246,17 +221,21 @@
       align-items: center;
       justify-content: center;
       gap: 12px;
+      justify-self: center;
     }
 
     .footer-app {
       display: inline-flex;
       align-items: center;
       gap: 5px;
+      color: inherit;
+      text-decoration: none;
       white-space: nowrap;
       transition: color .15s ease, transform .15s ease;
     }
 
-    .footer-app:hover {
+    .footer-app:hover,
+    .footer-app:focus-visible {
       color: var(--text);
       transform: translateY(-1px);
     }
@@ -272,9 +251,10 @@
       stroke-linejoin: round;
     }
 
-    #footerMessage,
     #clock {
+      justify-self: end;
       white-space: nowrap;
+      text-align: right;
     }
 
     #toast {
@@ -334,7 +314,6 @@
       to { filter: hue-rotate(360deg); }
     }
 
-
     .instruction-overlay {
       position: fixed;
       left: 50%;
@@ -390,6 +369,26 @@
       transition: opacity .15s ease;
     }
 
+    @media (max-width: 760px) {
+      footer {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 7px;
+      }
+
+      #footerMessage,
+      #clock {
+        justify-self: center;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .footer-apps {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+      }
+    }
+
     @media (max-width: 620px) {
 	  body {
 	    align-items: flex-start;
@@ -401,11 +400,6 @@
       .grid { grid-template-columns: 1fr; }
       .wide { grid-column: auto; }
       .mini-stats { grid-template-columns: repeat(2,1fr); }
-      footer { gap: 7px 9px; }
-      .footer-separator { display: none; }
-      .footer-apps { flex-wrap: wrap; gap: 8px 12px; }
-      #footerMessage,
-      #clock { white-space: normal; text-align: center; }
     }
   </style>
 </head>
@@ -413,7 +407,6 @@
 <body class="dark">
   <main class="wrap" id="page">
     <nav>
-      <span class="badge"><span class="dot"></span><span id="statusText">website technically online</span></span>
       <button class="text-button" id="themeToggle">turn off the lights</button>
     </nav>
 
@@ -468,10 +461,9 @@
     </section>
 
     <footer>
-      <span id="footerMessage">Last updated whenever I remembered this exists.</span>
-      <span class="footer-separator" aria-hidden="true">·</span>
+      <span id="footerMessage">Maintained with inconsistent enthusiasm.</span>
       <span class="footer-apps" aria-label="Apps">
-        <span class="footer-app" title="Receipt2Cloud">
+        <a class="footer-app" href="https://play.google.com/store/apps/details?id=com.receipt2cloud.app" target="_blank" rel="noopener noreferrer" title="Receipt2Cloud on Google Play">
           <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6.5 3.5h8l3 3v5" />
             <path d="M14.5 3.5v3h3" />
@@ -479,25 +471,24 @@
             <path d="M13.5 16.8h4.2a2.8 2.8 0 0 0 .4-5.6 4 4 0 0 0-7.5 1.6 2.1 2.1 0 0 0 .8 4" />
           </svg>
           <span>Receipt2Cloud</span>
-        </span>
-        <span class="footer-app" title="FileClean">
+        </a>
+        <a class="footer-app" href="https://play.google.com/apps/testing/com.fileclean.app" target="_blank" rel="noopener noreferrer" title="FileClean on Google Play">
           <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
             <path d="M6 3.5h8l4 4v13H6z" />
             <path d="M14 3.5v4h4" />
             <path d="M10 13l.7 1.8 1.8.7-1.8.7L10 18l-.7-1.8-1.8-.7 1.8-.7z" />
           </svg>
           <span>FileClean</span>
-        </span>
-        <span class="footer-app" title="Stock Checker">
+        </a>
+        <a class="footer-app" href="https://play.google.com/apps/testing/com.stockchecker.app" target="_blank" rel="noopener noreferrer" title="Stock Checker on Google Play">
           <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="10.5" cy="10.5" r="5.5" />
             <path d="M14.5 14.5L20 20" />
             <path d="M8 10.5h5" />
           </svg>
           <span>Stock Checker</span>
-        </span>
+        </a>
       </span>
-      <span class="footer-separator" aria-hidden="true">·</span>
       <span id="clock">00:00:00 — still no content</span>
     </footer>
   </main>
@@ -519,28 +510,6 @@
       "This thought was selected by Math.random(), which feels appropriate."
     ];
 
-    const statusMessages = [
-      "website technically online",
-      "probably working",
-      "still unnecessary",
-      "server has accepted its fate",
-      "no incidents worth reporting",
-      "content remains unavailable",
-      "operating within expectations"
-    ];
-
-    const footerMessages = [
-      "Last updated whenever I remembered this exists.",
-      "No roadmap. No newsletter. No problem.",
-      "Built with HTML, CSS, JavaScript, and questionable priorities.",
-      "No AI chatbot was harmed in the making of this website.",
-      "© probably this year.",
-      "Still no terms of service. You're welcome.",
-      "Maintained with inconsistent enthusiasm."
-    ];
-
-    const uncommonFooter = "You got the uncommon footer. Nice.";
-
     const body = document.body;
     const page = document.getElementById("page");
     const toast = document.getElementById("toast");
@@ -549,8 +518,6 @@
     const percent = document.getElementById("percent");
     const clickCount = document.getElementById("clickCount");
     const themeToggle = document.getElementById("themeToggle");
-    const statusText = document.getElementById("statusText");
-    const footerMessage = document.getElementById("footerMessage");
     const clock = document.getElementById("clock");
     const instructionOverlay = document.getElementById("instructionOverlay");
     const vanishOverlay = document.getElementById("vanishOverlay");
@@ -594,22 +561,6 @@
       clock.textContent = `${h}:${m}:${s} — still no content`;
     }
 
-    function cycleFooter() {
-      if (Math.floor(Math.random() * 25) === 0) {
-        footerMessage.textContent = uncommonFooter;
-        return;
-      }
-
-      const current = footerMessage.textContent;
-      let next = footerMessages[Math.floor(Math.random() * footerMessages.length)];
-
-      if (next === current) {
-        next = footerMessages[(footerMessages.indexOf(next) + 1) % footerMessages.length];
-      }
-
-      footerMessage.textContent = next;
-    }
-
     function rareVanishEvent() {
       if (vanishRunning || Math.floor(Math.random() * 30) !== 0) return;
 
@@ -628,22 +579,6 @@
           vanishRunning = false;
         }, 250);
       }, 2000);
-    }
-
-    function cycleStatus() {
-      const current = statusText.textContent;
-      let next = statusMessages[Math.floor(Math.random() * statusMessages.length)];
-
-      if (next === current) {
-        next = statusMessages[(statusMessages.indexOf(next) + 1) % statusMessages.length];
-      }
-
-      statusText.classList.add("fade");
-
-      setTimeout(() => {
-        statusText.textContent = next;
-        statusText.classList.remove("fade");
-      }, 180);
     }
 
     function showInstructions() {
@@ -779,8 +714,6 @@
     }
 
     setInterval(updateClock, 1000);
-    setInterval(cycleStatus, 11000);
-    setInterval(cycleFooter, 14000);
 
     updateClock();
     resetIdleTimer();
