@@ -9,31 +9,29 @@
 
   <style>
     :root {
-      color-scheme: light dark;
-      --bg: #f3f0e8;
-      --panel: rgba(255, 255, 255, .62);
-      --text: #171717;
-      --muted: #706c64;
-      --line: rgba(23, 23, 23, .14);
-      --accent: #0f7a55;
-      --shadow: 0 12px 35px rgba(0, 0, 0, .05);
-    }
-
-    @media (prefers-color-scheme: dark) {
-      :root {
-        --bg: #071311;
-        --panel: rgba(255, 255, 255, .045);
-        --text: #f3fff9;
-        --muted: #9bb0a8;
-        --line: rgba(255, 255, 255, .14);
-        --accent: #00f58c;
-        --shadow: 0 12px 35px rgba(0, 0, 0, .22);
-      }
+      color-scheme: dark;
+      --bg: #090b0b;
+      --surface: #111313;
+      --surface-variant: #1a1d1c;
+      --text: #f2f4f3;
+      --muted: #adb4b1;
+      --line: #353a38;
+      --accent: #22f27f;
+      --accent-on: #02150b;
+      --accent-container: #123023;
+      --accent-container-text: #d7f5e3;
+      --discord: #5865f2;
+      --discord-container: #252a64;
+      --discord-container-text: #e3e5ff;
+      --shadow: 0 16px 42px rgba(0, 0, 0, .32);
     }
 
     * { box-sizing: border-box; }
 
-    html { scroll-behavior: smooth; }
+    html {
+      scroll-behavior: smooth;
+      background: var(--bg);
+    }
 
     body {
       margin: 0;
@@ -65,12 +63,14 @@
       letter-spacing: -.02em;
     }
 
+    .brand:hover { color: var(--accent); }
+
     .home {
       color: var(--muted);
       text-decoration: none;
     }
 
-    .home:hover { color: var(--text); }
+    .home:hover { color: var(--discord-container-text); }
 
     .eyebrow {
       margin: 0 0 10px;
@@ -83,6 +83,7 @@
 
     h1 {
       margin: 0;
+      color: var(--text);
       font-size: clamp(38px, 7vw, 64px);
       line-height: .98;
       letter-spacing: -.055em;
@@ -105,21 +106,22 @@
     .summary {
       margin: 30px 0 18px;
       padding: 20px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--accent);
       border-radius: 18px;
-      background: var(--panel);
+      background: var(--accent-container);
       box-shadow: var(--shadow);
     }
 
     .summary strong {
       display: block;
       margin-bottom: 6px;
+      color: var(--accent);
       font-size: 18px;
     }
 
     .summary p {
       margin: 0;
-      color: var(--muted);
+      color: var(--accent-container-text);
       line-height: 1.6;
     }
 
@@ -130,6 +132,7 @@
 
     h2 {
       margin: 0 0 12px;
+      color: var(--text);
       font-size: 21px;
       letter-spacing: -.025em;
     }
@@ -151,13 +154,14 @@
     li + li { margin-top: 7px; }
 
     a { color: var(--accent); }
+    a:hover { color: var(--discord-container-text); }
 
     code {
       padding: 2px 6px;
-      border: 1px solid var(--line);
+      border: 1px solid var(--discord);
       border-radius: 6px;
-      color: var(--text);
-      background: var(--panel);
+      color: var(--discord-container-text);
+      background: var(--discord-container);
       font: inherit;
       font-size: .9em;
     }
@@ -183,13 +187,13 @@
       <p class="lede">
         Stock Checker lets you sign in with Discord and subscribe to selected stock alerts. The service stores only the information needed to identify your Discord account, remember your alert preferences, maintain your app session, and deliver Discord notifications.
       </p>
-      <p class="meta">Last updated: September 11, 2026</p>
+      <p class="meta">Last updated: September 16, 2026</p>
     </header>
 
     <div class="summary">
       <strong>The short version</strong>
       <p>
-        Stock Checker does not sell your personal data, does not use advertising or behavioral tracking, and does not request access to your Discord servers or messages. Discord sign-in is used to identify the account that should receive stock-alert DMs. You can unsubscribe from alerts at any time.
+        Stock Checker does not sell your personal data, does not use advertising or behavioral tracking, and does not request permission to view your other Discord servers, channels, or messages. Discord sign-in identifies the account that should receive stock-alert DMs and may add that account to the official Stock Checker Discord server. You can unsubscribe from alerts at any time.
       </p>
     </div>
 
@@ -204,13 +208,14 @@
         <li>Your subscription status</li>
         <li>Service timestamps needed to maintain the subscription and session</li>
       </ul>
-      <p>Stock Checker does not request your Discord email address and does not request access to your Discord servers, channels, friends, or message history.</p>
+      <p>Stock Checker does not request your Discord email address and does not request permission to list or view your other Discord servers, channels, friends, or message history. As part of sign-in, Stock Checker may add your Discord account to the official Stock Checker server.</p>
     </section>
 
     <section>
       <h2>2. Discord sign-in</h2>
-      <p>Stock Checker uses Discord OAuth to authenticate you. The app requests only the basic <code>identify</code> scope.</p>
-      <p>OAuth uses PKCE and a state value to protect the sign-in flow. Discord access tokens are used only to retrieve your basic Discord identity and are not stored as long-term Stock Checker credentials.</p>
+      <p>Stock Checker uses Discord OAuth to authenticate you. The app requests the <code>identify</code> scope to retrieve your basic Discord identity and the <code>guilds.join</code> scope to add your Discord account to the official Stock Checker Discord server.</p>
+      <p>The <code>guilds.join</code> permission is used only for joining the Stock Checker server. It does not give Stock Checker permission to view or manage your other Discord servers, channels, friends, or message history.</p>
+      <p>OAuth uses PKCE and a state value to protect the sign-in flow. Discord access tokens are used only for authentication and the server-join process, then revoked after the sign-in exchange. They are not stored as long-term Stock Checker credentials.</p>
       <p>Discord is a separate service. Information processed directly by Discord is governed by Discord's own terms and privacy policy.</p>
     </section>
 
@@ -254,7 +259,7 @@
     <section>
       <h2>8. Data sharing and selling</h2>
       <p>Stock Checker does not sell personal data.</p>
-      <p>Data is shared only as needed to operate the service, including communication with Discord for authentication and DM delivery.</p>
+      <p>Data is shared only as needed to operate the service, including communication with Discord for authentication, joining the official Stock Checker server, and DM delivery.</p>
       <p>Stock Checker does not share subscriber data with advertisers or data brokers.</p>
     </section>
 
