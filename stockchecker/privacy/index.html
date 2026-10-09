@@ -11,21 +11,40 @@
 
   <style>
     :root {
-      color-scheme: dark;
-      --bg: #090b0b;
-      --surface: #111313;
-      --surface-variant: #1a1d1c;
-      --text: #f2f4f3;
-      --muted: #adb4b1;
-      --line: #353a38;
-      --accent: #22f27f;
-      --accent-on: #02150b;
-      --accent-container: #123023;
-      --accent-container-text: #d7f5e3;
-      --discord: #5865f2;
-      --discord-container: #252a64;
-      --discord-container-text: #e3e5ff;
-      --shadow: 0 16px 42px rgba(0, 0, 0, .32);
+      color-scheme: light dark;
+      --bg: #f7f7f7;
+      --surface: #ffffff;
+      --surface-variant: #f0f0f0;
+      --text: #171717;
+      --muted: #555555;
+      --line: #d4d4d4;
+      --accent: #242424;
+      --accent-on: #ffffff;
+      --accent-container: #eeeeee;
+      --accent-container-text: #262626;
+      --discord: #555555;
+      --discord-container: #e8e8e8;
+      --discord-container-text: #262626;
+      --shadow: 0 16px 42px rgba(0, 0, 0, .08);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #111111;
+        --surface: #1e1e1e;
+        --surface-variant: #252525;
+        --text: #f5f5f5;
+        --muted: #bdbdbd;
+        --line: #414141;
+        --accent: #eeeeee;
+        --accent-on: #171717;
+        --accent-container: #292929;
+        --accent-container-text: #e8e8e8;
+        --discord: #c2c2c2;
+        --discord-container: #303030;
+        --discord-container-text: #e8e8e8;
+        --shadow: 0 16px 42px rgba(0, 0, 0, .32);
+      }
     }
 
     * { box-sizing: border-box; }
