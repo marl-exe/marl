@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="A website about not knowing what to put on a website." />
+  <title>nothing to see here.</title>
+
+  <style>
+    :root {
+      --bg: #f3f0e8;
+      --panel: rgba(255,255,255,.58);
+      --text: #171717;
+      --muted: #706c64;
+      --line: rgba(23,23,23,.14);
+      --shadow: 0 12px 35px rgba(0,0,0,.05);
+    }
+
+    body.dark {
+      --bg: #111;
+      --panel: rgba(255,255,255,.045);
+      --text: #f4f1ea;
+      --muted: #aaa59c;
+      --line: rgba(255,255,255,.14);
+      --shadow: 0 12px 35px rgba(0,0,0,.22);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+	  
+	  display: flex;
+	  align-items: center;
+	  
+      background: var(--bg);
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      transition: .25s ease;
+    }
+
+    .wrap {
+      width: min(980px, calc(100% - 40px));
+      margin: 0 auto;
+      padding: 30px 0 42px;
+    }
+
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 34px;
+      font-size: 12px;
+      color: var(--muted);
+    }
+
+    button { font: inherit; }
+
+    .text-button {
+      border: 0;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      padding: 4px 0;
+    }
+
+    .hero {
+      margin-bottom: 24px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(44px, 6vw, 86px);
+      line-height: .92;
+      letter-spacing: -.065em;
+    }
+
+    .lede {
+      max-width: 590px;
+      margin: 18px 0 0;
+      color: var(--muted);
+      font-size: 16px;
+      line-height: 1.45;
+    }
+
+    .actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 22px;
+    }
+
+    .btn {
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 9px 12px;
+      background: var(--panel);
+      color: var(--text);
+      cursor: pointer;
+      transition: .15s ease;
+    }
+
+    .btn:hover {
+      transform: translateY(-1px);
+      border-color: var(--text);
+    }
+
+    .btn.primary {
+      background: var(--text);
+      color: var(--bg);
+      border-color: var(--text);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1.05fr .95fr;
+      gap: 12px;
+    }
+
+    .card {
+      padding: 18px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--panel);
+      box-shadow: var(--shadow);
+    }
+
+    .wide { grid-column: 1 / -1; }
+
+    .eyebrow {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+    }
+
+    .status-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 10px;
+    }
+
+    .big {
+      font-size: 34px;
+      font-weight: 750;
+      letter-spacing: -.05em;
+    }
+
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .progress {
+      height: 8px;
+      margin-top: 10px;
+      overflow: hidden;
+      border-radius: 999px;
+      background: rgba(127,127,127,.18);
+    }
+
+    .bar {
+      width: 73%;
+      height: 100%;
+      background: var(--text);
+      border-radius: inherit;
+      transition: width .35s ease;
+    }
+
+    .thought {
+      font-size: 20px;
+      line-height: 1.35;
+      letter-spacing: -.015em;
+    }
+
+    .mini-stats {
+      display: grid;
+      grid-template-columns: repeat(4,1fr);
+      gap: 8px;
+      margin-top: 8px;
+    }
+
+    .mini {
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    .mini strong {
+      display: block;
+      color: var(--text);
+      font-size: 20px;
+      margin-bottom: 2px;
+    }
+
+    footer {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr);
+      align-items: center;
+      gap: 16px;
+      margin-top: 12px;
+      padding: 0 2px;
+      font-size: 11px;
+      color: var(--muted);
+    }
+
+    #footerMessage {
+      justify-self: start;
+      white-space: nowrap;
+    }
+
+    .footer-apps {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 12px;
+      justify-self: center;
+    }
+
+    .footer-app {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      color: inherit;
+      text-decoration: none;
+      white-space: nowrap;
+      transition: color .15s ease, transform .15s ease;
+    }
+
+    .footer-app:hover,
+    .footer-app:focus-visible {
+      color: var(--text);
+      transform: translateY(-1px);
+    }
+
+    .footer-icon {
+      width: 14px;
+      height: 14px;
+      flex: 0 0 auto;
+      fill: none;
+      stroke: currentColor;
+      stroke-width: 1.7;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    #clock {
+      justify-self: end;
+      white-space: nowrap;
+      text-align: right;
+    }
+
+    #toast {
+      position: fixed;
+      left: 50%;
+      bottom: 16px;
+      transform: translate(-50%, 12px);
+      padding: 9px 12px;
+      border-radius: 999px;
+      background: var(--text);
+      color: var(--bg);
+      font-size: 12px;
+      opacity: 0;
+      pointer-events: none;
+      transition: .2s ease;
+      max-width: calc(100vw - 28px);
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    #toast.show {
+      opacity: 1;
+      transform: translate(-50%,0);
+    }
+
+    .secret {
+      position: fixed;
+      right: 12px;
+      bottom: 12px;
+      width: 7px;
+      height: 7px;
+      padding: 0;
+      border: 0;
+      border-radius: 50%;
+      background: currentColor;
+      opacity: .12;
+      cursor: help;
+    }
+
+    .shake { animation: shake .28s ease; }
+
+    @keyframes shake {
+      25% { transform: translateX(-5px); }
+      75% { transform: translateX(5px); }
+    }
+
+    body.worse-1 { font-family: "Comic Sans MS", cursive; }
+    body.worse-2 .card:nth-child(odd) { transform: rotate(-.4deg); }
+    body.worse-2 .card:nth-child(even) { transform: rotate(.4deg); }
+    body.worse-3 h1 { text-shadow: 3px 3px 0 rgba(255,0,170,.22); }
+    body.worse-4 * { cursor: crosshair !important; }
+    body.worse-5 .btn { border-radius: 3px; box-shadow: 4px 4px 0 rgba(127,127,127,.18); }
+    body.maximum-chaos { animation: chaos 4s linear infinite; }
+
+    @keyframes chaos {
+      to { filter: hue-rotate(360deg); }
+    }
+
+    .instruction-overlay {
+      position: fixed;
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%) scale(.96);
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--panel);
+      color: var(--text);
+      font-size: 12px;
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(12px);
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .16s ease, transform .16s ease;
+      z-index: 1000;
+      white-space: nowrap;
+    }
+
+    .instruction-overlay.show {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+
+    .vanish-overlay {
+      position: fixed;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      background: var(--bg);
+      color: var(--text);
+      font-size: 18px;
+      letter-spacing: -.02em;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .15s ease;
+      z-index: 999;
+    }
+
+    .vanish-overlay.show {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    body.vanished #page,
+    body.vanished .secret {
+      opacity: 0;
+    }
+
+    #page,
+    .secret {
+      transition: opacity .15s ease;
+    }
+
+    @media (min-width: 1800px) {
+      .wrap {
+        width: min(1120px, calc(100% - 80px));
+      }
+    }
+
+    @media (max-width: 760px) {
+      footer {
+        grid-template-columns: 1fr;
+        justify-items: center;
+        gap: 7px;
+      }
+
+      #footerMessage,
+      #clock {
+        justify-self: center;
+        white-space: normal;
+        text-align: center;
+      }
+
+      .footer-apps {
+        flex-wrap: wrap;
+        gap: 8px 12px;
+      }
+    }
+
+    @media (max-width: 620px) {
+	  body {
+	    align-items: flex-start;
+	  }
+      .wrap { padding-top: 14px; }
+      nav { margin-bottom: 18px; }
+      h1 { font-size: clamp(42px, 15vw, 64px); }
+      .lede { font-size: 15px; }
+      .grid { grid-template-columns: 1fr; }
+      .wide { grid-column: auto; }
+      .mini-stats { grid-template-columns: repeat(2,1fr); }
+    }
+  </style>
+</head>
+
+<body class="dark">
+  <main class="wrap" id="page">
+    <nav>
+      <button class="text-button" id="themeToggle">turn off the lights</button>
+    </nav>
+
+    <section class="hero">
+      <h1>nothing to see here.</h1>
+      <p class="lede">
+        I bought this domain before I figured out what to put on it.
+        So this is a website about having a website.
+      </p>
+
+      <div class="actions">
+        <button class="btn primary" id="dontClick">do not click</button>
+        <button class="btn" id="randomThought">random thought</button>
+        <button class="btn" id="makeWorse">make it worse</button>
+      </div>
+    </section>
+
+    <section class="grid">
+      <article class="card">
+        <p class="eyebrow">current status</p>
+        <div class="status-row">
+          <span class="big" id="percent">73%</span>
+          <span class="small">completely fictional</span>
+        </div>
+        <div class="progress"><div class="bar" id="progressBar"></div></div>
+      </article>
+
+      <article class="card">
+        <p class="eyebrow">bad decisions</p>
+        <div class="status-row">
+          <span class="big" id="clickCount">0</span>
+          <span class="small">times you ignored me</span>
+        </div>
+      </article>
+
+      <article class="card wide">
+        <p class="eyebrow">a thought, apparently</p>
+        <div class="thought" id="thought">
+          You've now spent more time on this website than its creator expected.
+        </div>
+      </article>
+
+      <article class="card wide">
+        <p class="eyebrow">important statistics</p>
+        <div class="mini-stats">
+          <div class="mini"><strong>0</strong>products sold</div>
+          <div class="mini"><strong>0</strong>awards won</div>
+          <div class="mini"><strong>0</strong>useful things</div>
+          <div class="mini"><strong>1</strong>domain renewal</div>
+        </div>
+      </article>
+    </section>
+
+    <footer>
+      <span id="footerMessage">Maintained with inconsistent enthusiasm.</span>
+      <span class="footer-apps" aria-label="Apps">
+        <a class="footer-app" href="https://play.google.com/store/apps/details?id=com.receipt2cloud.app" target="_blank" rel="noopener noreferrer" title="Receipt2Cloud on Google Play">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6.5 3.5h8l3 3v5" />
+            <path d="M14.5 3.5v3h3" />
+            <path d="M6.5 3.5v17l2-1.2 2 1.2 2-1.2 2 1.2" />
+            <path d="M13.5 16.8h4.2a2.8 2.8 0 0 0 .4-5.6 4 4 0 0 0-7.5 1.6 2.1 2.1 0 0 0 .8 4" />
+          </svg>
+          <span>Receipt2Cloud</span>
+        </a>
+        <a class="footer-app" href="https://play.google.com/store/apps/details?id=com.fileclean.app" target="_blank" rel="noopener noreferrer" title="FileClean on Google Play">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M6 3.5h8l4 4v13H6z" />
+            <path d="M14 3.5v4h4" />
+            <path d="M10 13l.7 1.8 1.8.7-1.8.7L10 18l-.7-1.8-1.8-.7 1.8-.7z" />
+          </svg>
+          <span>FileClean</span>
+        </a>
+        <a class="footer-app" href="https://play.google.com/store/apps/details?id=com.stockchecker.app" target="_blank" rel="noopener noreferrer" title="Stock Checker on Google Play">
+          <svg class="footer-icon" viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="10.5" cy="10.5" r="5.5" />
+            <path d="M14.5 14.5L20 20" />
+            <path d="M8 10.5h5" />
+          </svg>
+          <span>Stock Checker</span>
+        </a>
+      </span>
+      <span id="clock">00:00:00 — still no content</span>
+    </footer>
+  </main>
+
+  <button class="secret" id="secret" aria-label="Secret"></button>
+  <div class="instruction-overlay" id="instructionOverlay">there are no instructions.</div>
+  <div class="vanish-overlay" id="vanishOverlay">sorry.</div>
+  <div id="toast" role="status" aria-live="polite"></div>
+
+  <script>
+    const thoughts = [
+      "You've now spent more time on this website than its creator expected.",
+      "This page has no cookies. It barely has a purpose.",
+      "Every serious website is one bad CSS decision away from becoming hilarious.",
+      "You could have opened another tab. Instead, you're still here.",
+      "Technically, refreshing this page counts as returning traffic.",
+      "Somewhere, a meeting is happening that could have been a single HTML file.",
+      "Nothing is loading. There is simply nothing to load.",
+      "This thought was selected by Math.random(), which feels appropriate."
+    ];
+
+    const body = document.body;
+    const page = document.getElementById("page");
+    const toast = document.getElementById("toast");
+    const thought = document.getElementById("thought");
+    const progressBar = document.getElementById("progressBar");
+    const percent = document.getElementById("percent");
+    const clickCount = document.getElementById("clickCount");
+    const themeToggle = document.getElementById("themeToggle");
+    const clock = document.getElementById("clock");
+    const instructionOverlay = document.getElementById("instructionOverlay");
+    const vanishOverlay = document.getElementById("vanishOverlay");
+    const makeWorseButton = document.getElementById("makeWorse");
+
+    let clicks = Number(localStorage.getItem("badDecisionCount") || 0);
+    let worseLevel = 0;
+    let idleTimer;
+    let idleTriggered = false;
+    let vanishRunning = false;
+    let instructionTimer;
+
+    clickCount.textContent = clicks;
+
+    function showToast(message) {
+      toast.textContent = message;
+      toast.classList.add("show");
+      clearTimeout(window.toastTimer);
+      window.toastTimer = setTimeout(() => toast.classList.remove("show"), 1800);
+    }
+
+    function randomThought() {
+      let next = thoughts[Math.floor(Math.random() * thoughts.length)];
+
+      if (next === thought.textContent.trim()) {
+        next = thoughts[(thoughts.indexOf(next) + 1) % thoughts.length];
+      }
+
+      thought.textContent = next;
+
+      const fake = 48 + Math.floor(Math.random() * 47);
+      progressBar.style.width = fake + "%";
+      percent.textContent = fake + "%";
+    }
+
+    function updateClock() {
+      const now = new Date();
+      const h = String(now.getHours()).padStart(2, "0");
+      const m = String(now.getMinutes()).padStart(2, "0");
+      const s = String(now.getSeconds()).padStart(2, "0");
+      clock.textContent = `${h}:${m}:${s} — still no content`;
+    }
+
+    function rareVanishEvent() {
+      if (vanishRunning || Math.floor(Math.random() * 30) !== 0) return;
+
+      vanishRunning = true;
+      body.classList.add("vanished");
+
+      setTimeout(() => {
+        vanishOverlay.classList.add("show");
+      }, 180);
+
+      setTimeout(() => {
+        body.classList.remove("vanished");
+        vanishOverlay.classList.remove("show");
+
+        setTimeout(() => {
+          vanishRunning = false;
+        }, 250);
+      }, 2000);
+    }
+
+    function showInstructions() {
+      instructionOverlay.classList.add("show");
+      clearTimeout(instructionTimer);
+
+      instructionTimer = setTimeout(() => {
+        instructionOverlay.classList.remove("show");
+      }, 2200);
+    }
+
+    function resetIdleTimer() {
+      clearTimeout(idleTimer);
+
+      if (!idleTriggered) {
+        idleTimer = setTimeout(() => {
+          thought.textContent = "You're still here? I really didn't plan for this.";
+          idleTriggered = true;
+        }, 25000);
+      }
+    }
+
+    function resetWorse() {
+      ["worse-1", "worse-2", "worse-3", "worse-4", "worse-5", "maximum-chaos"]
+        .forEach(className => body.classList.remove(className));
+
+      worseLevel = 0;
+      makeWorseButton.textContent = "make it worse";
+      showToast("Fine. I made it better.");
+    }
+
+    document.getElementById("dontClick").onclick = () => {
+      clicks++;
+      localStorage.setItem("badDecisionCount", clicks);
+      clickCount.textContent = clicks;
+
+      page.classList.remove("shake");
+      void page.offsetWidth;
+      page.classList.add("shake");
+
+      const messages = [
+        "I specifically asked you not to.",
+        "Interesting decision.",
+        "We are building a pattern here.",
+        "This is now statistically significant.",
+        "Please stop improving the engagement metrics."
+      ];
+
+      showToast(messages[Math.min(clicks - 1, messages.length - 1)]);
+    };
+
+    document.getElementById("randomThought").onclick = randomThought;
+
+    themeToggle.onclick = () => {
+      body.classList.toggle("dark");
+      const dark = body.classList.contains("dark");
+      themeToggle.textContent = dark ? "turn on the lights" : "turn off the lights";
+      localStorage.setItem("theme", dark ? "dark" : "light");
+    };
+
+    if (localStorage.getItem("theme") !== "light") {
+      body.classList.add("dark");
+      themeToggle.textContent = "turn on the lights";
+    } else {
+      body.classList.remove("dark");
+      themeToggle.textContent = "turn off the lights";
+    }
+
+    makeWorseButton.onclick = () => {
+      if (worseLevel >= 6) {
+        resetWorse();
+        return;
+      }
+
+      worseLevel++;
+
+      if (worseLevel <= 5) body.classList.add("worse-" + worseLevel);
+      if (worseLevel >= 6) {
+        body.classList.add("maximum-chaos");
+        makeWorseButton.textContent = "I regret this";
+      }
+
+      const messages = [
+        "Comic Sans. Obviously.",
+        "Slightly crooked. Much worse.",
+        "Tasteful terrible text shadow.",
+        "Professional cursor removed.",
+        "Buttons redesigned by committee.",
+        "Maximum bad decisions."
+      ];
+
+      showToast(messages[Math.min(worseLevel - 1, messages.length - 1)]);
+    };
+
+    let secretClicks = 0;
+    document.getElementById("secret").onclick = () => {
+      secretClicks++;
+      if (secretClicks < 3) {
+        showToast("That was definitely nothing.");
+      } else {
+        thought.textContent = "You found the secret. Your reward is knowing there was a secret.";
+        showToast("Achievement unlocked.");
+      }
+    };
+
+    document.addEventListener("keydown", event => {
+      if (event.key === "?") {
+        showInstructions();
+      }
+
+      if (event.key === "Escape") {
+        instructionOverlay.classList.remove("show");
+      }
+    });
+
+    document.addEventListener("visibilitychange", () => {
+      document.title = document.hidden ? "come back." : "nothing to see here.";
+    });
+
+    ["mousemove", "keydown", "click", "touchstart"].forEach(eventName => {
+      document.addEventListener(eventName, resetIdleTimer, { passive: true });
+    });
+
+    document.addEventListener("click", rareVanishEvent);
+
+    const hasVisitedBefore = localStorage.getItem("nothingSiteVisited") === "yes";
+    localStorage.setItem("nothingSiteVisited", "yes");
+
+    if (hasVisitedBefore) {
+      setTimeout(() => {
+        showToast("Oh. You came back.");
+      }, 900);
+    }
+
+    setInterval(updateClock, 1000);
+
+    updateClock();
+    resetIdleTimer();
+
+    console.log("%cYou found the console.", "font-size:18px;font-weight:bold;");
+    console.log("There is nothing useful here either.");
+  </script>
+</body>
+</html>
