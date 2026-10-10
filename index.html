@@ -101,7 +101,7 @@
 
     .btn {
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 4px;
       padding: 9px 12px;
       background: var(--panel);
       color: var(--text);
@@ -121,10 +121,6 @@
     }
 
     .btn:focus-visible, .text-button:focus-visible, .footer-app:focus-visible, .secret:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
-    .project-panel[hidden] { display: none; }
-    .project-panel { margin-bottom: 12px; }
-    .project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
-    .project-links a { color: var(--text); text-underline-offset: 3px; font-size: 13px; }
     .achievements { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
     .achievement { border: 1px solid var(--line); border-radius: 12px; padding: 10px; font-size: 12px; opacity: .55; }
     .achievement.unlocked { opacity: 1; }
@@ -143,7 +139,7 @@
     .card {
       padding: 18px;
       border: 1px solid var(--line);
-      border-radius: 16px;
+      border-radius: 4px;
       background: var(--panel);
       box-shadow: var(--shadow);
     }
@@ -181,7 +177,7 @@
       height: 8px;
       margin-top: 10px;
       overflow: hidden;
-      border-radius: 999px;
+      border-radius: 4px;
       background: rgba(127,127,127,.18);
     }
 
@@ -189,7 +185,7 @@
       width: 73%;
       height: 100%;
       background: var(--text);
-      border-radius: inherit;
+      border-radius: 2px;
       transition: width .35s ease;
     }
 
@@ -209,7 +205,7 @@
     .mini {
       padding: 9px 10px;
       border: 1px solid var(--line);
-      border-radius: 12px;
+      border-radius: 4px;
       font-size: 11px;
       color: var(--muted);
     }
@@ -284,7 +280,7 @@
       bottom: 16px;
       transform: translate(-50%, 12px);
       padding: 9px 12px;
-      border-radius: 999px;
+      border-radius: 4px;
       background: var(--text);
       color: var(--bg);
       font-size: 12px;
@@ -331,7 +327,7 @@
     body.worse-2 .card:nth-child(even) { transform: rotate(.4deg); }
     body.worse-3 h1 { text-shadow: 3px 3px 0 rgba(255,0,170,.22); }
     body.worse-4 * { cursor: crosshair !important; }
-    body.worse-5 .btn { border-radius: 3px; box-shadow: 4px 4px 0 rgba(127,127,127,.18); }
+    body.worse-5 .btn { border-radius: 0; box-shadow: 4px 4px 0 rgba(127,127,127,.18); }
     body.maximum-chaos { animation: chaos 4s linear infinite; }
 
     @keyframes chaos {
@@ -345,7 +341,7 @@
       transform: translate(-50%, -50%) scale(.96);
       padding: 10px 14px;
       border: 1px solid var(--line);
-      border-radius: 999px;
+      border-radius: 4px;
       background: var(--panel);
       color: var(--text);
       font-size: 12px;
@@ -451,19 +447,9 @@
         <button class="btn primary" id="dontClick">do not click</button>
         <button class="btn" id="randomThought">random thought</button>
         <button class="btn" id="makeWorse">make it worse</button>
-        <button class="btn" id="projectsToggle" aria-expanded="false" aria-controls="projectPanel">I accidentally built some things</button>
       </div>
     </section>
 
-    <section class="card project-panel" id="projectPanel" hidden aria-label="Projects">
-      <p class="eyebrow">actual things, unfortunately</p>
-      <div class="small">These are real. Please don't tell the other sections.</div>
-      <div class="project-links">
-        <a href="https://play.google.com/store/apps/details?id=com.receipt2cloud.app" target="_blank" rel="noopener noreferrer">Receipt2Cloud ↗</a>
-        <a href="https://play.google.com/store/apps/details?id=com.fileclean.app" target="_blank" rel="noopener noreferrer">FileClean ↗</a>
-        <a href="https://play.google.com/store/apps/details?id=com.stockchecker.app" target="_blank" rel="noopener noreferrer">Stock Checker ↗</a>
-      </div>
-    </section>
     <section class="grid">
       <article class="card">
         <p class="eyebrow">current status</p>
@@ -606,12 +592,6 @@
       if (found) showToast("Achievement unlocked: " + found[1]);
     }
     renderAchievements();
-    const projectsToggle = document.getElementById("projectsToggle");
-    const projectPanel = document.getElementById("projectPanel");
-    projectsToggle.addEventListener("click", () => {
-      projectPanel.hidden = !projectPanel.hidden;
-      projectsToggle.setAttribute("aria-expanded", String(!projectPanel.hidden));
-    });
     let clicks = Number(safeStorage.getItem("badDecisionCount") || 0);
     let worseLevel = 0;
     let idleTimer;
