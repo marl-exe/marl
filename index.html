@@ -4,6 +4,13 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="A website about not knowing what to put on a website." />
+  <meta name="theme-color" content="#111111" />
+  <meta property="og:type" content="website" />
+  <meta property="og:title" content="nothing to see here." />
+  <meta property="og:description" content="I bought this domain before I figured out what to put on it." />
+  <meta property="og:url" content="https://marlrivera.com/" />
+  <meta name="twitter:card" content="summary" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%23111'/%3E%3Cpath d='M16 20h32M16 32h20M16 44h32' stroke='white' stroke-width='5' stroke-linecap='round'/%3E%3C/svg%3E" />
   <title>nothing to see here.</title>
 
   <style>
@@ -113,6 +120,20 @@
       border-color: var(--text);
     }
 
+    .btn:focus-visible, .text-button:focus-visible, .footer-app:focus-visible, .secret:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
+    .project-panel[hidden] { display: none; }
+    .project-panel { margin-bottom: 12px; }
+    .project-links { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 12px; }
+    .project-links a { color: var(--text); text-underline-offset: 3px; font-size: 13px; }
+    .achievements { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+    .achievement { border: 1px solid var(--line); border-radius: 12px; padding: 10px; font-size: 12px; opacity: .55; }
+    .achievement.unlocked { opacity: 1; }
+    .achievement strong { display: block; margin-bottom: 4px; }
+    .achievement span { color: var(--muted); font-size: 11px; }
+    @media (max-width: 620px) { .achievements { grid-template-columns: 1fr; } .actions .btn { min-height: 40px; } }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
+    }
     .grid {
       display: grid;
       grid-template-columns: 1.05fr .95fr;
@@ -273,7 +294,10 @@
       max-width: calc(100vw - 28px);
       white-space: nowrap;
       overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      text-align: center;
+      z-index: 1100;
     }
 
     #toast.show {
@@ -427,9 +451,19 @@
         <button class="btn primary" id="dontClick">do not click</button>
         <button class="btn" id="randomThought">random thought</button>
         <button class="btn" id="makeWorse">make it worse</button>
+        <button class="btn" id="projectsToggle" aria-expanded="false" aria-controls="projectPanel">I accidentally built some things</button>
       </div>
     </section>
 
+    <section class="card project-panel" id="projectPanel" hidden aria-label="Projects">
+      <p class="eyebrow">actual things, unfortunately</p>
+      <div class="small">These are real. Please don't tell the other sections.</div>
+      <div class="project-links">
+        <a href="https://play.google.com/store/apps/details?id=com.receipt2cloud.app" target="_blank" rel="noopener noreferrer">Receipt2Cloud ↗</a>
+        <a href="https://play.google.com/store/apps/details?id=com.fileclean.app" target="_blank" rel="noopener noreferrer">FileClean ↗</a>
+        <a href="https://play.google.com/store/apps/details?id=com.stockchecker.app" target="_blank" rel="noopener noreferrer">Stock Checker ↗</a>
+      </div>
+    </section>
     <section class="grid">
       <article class="card">
         <p class="eyebrow">current status</p>
@@ -463,6 +497,10 @@
           <div class="mini"><strong>0</strong>useful things</div>
           <div class="mini"><strong>1</strong>domain renewal</div>
         </div>
+      </article>
+      <article class="card wide">
+        <div class="status-row"><p class="eyebrow">useless achievements</p><span class="small" id="achievementCount">0 / 5 unlocked</span></div>
+        <div class="achievements" id="achievementList"></div>
       </article>
     </section>
 
@@ -529,7 +567,52 @@
     const vanishOverlay = document.getElementById("vanishOverlay");
     const makeWorseButton = document.getElementById("makeWorse");
 
-    let clicks = Number(localStorage.getItem("badDecisionCount") || 0);
+
+    const safeStorage = {
+      getItem(key) { try { return localStorage.getItem(key); } catch { return null; } },
+      setItem(key, value) { try { localStorage.setItem(key, value); } catch {} }
+    };
+    const achievementDefs = [
+      ["bad-listener", "Bad Listener", "Click do not click 10 times."],
+      ["repeat-offender", "Repeat Offender", "Return to the site."],
+      ["procrastinator", "Professional Procrastinator", "Stay for 2 minutes."],
+      ["designer", "Terrible Designer", "Reach maximum chaos."],
+      ["curious", "Curiosity Killed Nothing", "Find and click the secret three times."]
+    ];
+    let stored = [];
+    try { stored = JSON.parse(safeStorage.getItem("uselessAchievements") || "[]"); } catch {}
+    const unlocked = new Set(Array.isArray(stored) ? stored : []);
+    function renderAchievements() {
+      document.getElementById("achievementCount").textContent = unlocked.size + " / 5 unlocked";
+      const list = document.getElementById("achievementList");
+      list.replaceChildren();
+      achievementDefs.forEach(([id, name, hint]) => {
+        const card = document.createElement("div");
+        card.className = "achievement" + (unlocked.has(id) ? " unlocked" : "");
+        const label = document.createElement("strong");
+        label.textContent = (unlocked.has(id) ? "✓ " : "○ ") + name;
+        const description = document.createElement("span");
+        description.textContent = hint;
+        card.append(label, description);
+        list.append(card);
+      });
+    }
+    function unlock(id) {
+      if (unlocked.has(id)) return;
+      unlocked.add(id);
+      safeStorage.setItem("uselessAchievements", JSON.stringify([...unlocked]));
+      renderAchievements();
+      const found = achievementDefs.find(a => a[0] === id);
+      if (found) showToast("Achievement unlocked: " + found[1]);
+    }
+    renderAchievements();
+    const projectsToggle = document.getElementById("projectsToggle");
+    const projectPanel = document.getElementById("projectPanel");
+    projectsToggle.addEventListener("click", () => {
+      projectPanel.hidden = !projectPanel.hidden;
+      projectsToggle.setAttribute("aria-expanded", String(!projectPanel.hidden));
+    });
+    let clicks = Number(safeStorage.getItem("badDecisionCount") || 0);
     let worseLevel = 0;
     let idleTimer;
     let idleTriggered = false;
@@ -618,8 +701,9 @@
 
     document.getElementById("dontClick").onclick = () => {
       clicks++;
-      localStorage.setItem("badDecisionCount", clicks);
+      safeStorage.setItem("badDecisionCount", clicks);
       clickCount.textContent = clicks;
+      if (clicks >= 10) unlock("bad-listener");
 
       page.classList.remove("shake");
       void page.offsetWidth;
@@ -642,10 +726,10 @@
       body.classList.toggle("dark");
       const dark = body.classList.contains("dark");
       themeToggle.textContent = dark ? "turn on the lights" : "turn off the lights";
-      localStorage.setItem("theme", dark ? "dark" : "light");
+      safeStorage.setItem("theme", dark ? "dark" : "light");
     };
 
-    if (localStorage.getItem("theme") !== "light") {
+    if (safeStorage.getItem("theme") !== "light") {
       body.classList.add("dark");
       themeToggle.textContent = "turn on the lights";
     } else {
@@ -665,6 +749,7 @@
       if (worseLevel >= 6) {
         body.classList.add("maximum-chaos");
         makeWorseButton.textContent = "I regret this";
+        unlock("designer");
       }
 
       const messages = [
@@ -686,7 +771,7 @@
         showToast("That was definitely nothing.");
       } else {
         thought.textContent = "You found the secret. Your reward is knowing there was a secret.";
-        showToast("Achievement unlocked.");
+        unlock("curious");
       }
     };
 
@@ -708,17 +793,20 @@
       document.addEventListener(eventName, resetIdleTimer, { passive: true });
     });
 
-    document.addEventListener("click", rareVanishEvent);
+    ["dontClick", "randomThought", "makeWorse"].forEach(id => document.getElementById(id).addEventListener("click", rareVanishEvent));
 
-    const hasVisitedBefore = localStorage.getItem("nothingSiteVisited") === "yes";
-    localStorage.setItem("nothingSiteVisited", "yes");
+    const hasVisitedBefore = safeStorage.getItem("nothingSiteVisited") === "yes";
+    safeStorage.setItem("nothingSiteVisited", "yes");
 
     if (hasVisitedBefore) {
+      unlock("repeat-offender");
       setTimeout(() => {
         showToast("Oh. You came back.");
       }, 900);
     }
 
+    if (clicks >= 10) unlock("bad-listener");
+    setTimeout(() => unlock("procrastinator"), 120000);
     setInterval(updateClock, 1000);
 
     updateClock();
