@@ -121,11 +121,12 @@
     }
 
     .btn:focus-visible, .text-button:focus-visible, .footer-app:focus-visible, .secret:focus-visible { outline: 2px solid var(--text); outline-offset: 4px; }
-    .achievements { display: grid; grid-template-columns: repeat(2,minmax(0,1fr)); gap: 8px; }
+    .achievements { display: grid; grid-template-columns: repeat(3,minmax(0,1fr)); gap: 8px; }
     .achievement { border: 1px solid var(--line); border-radius: 4px; padding: 10px; font-size: 12px; opacity: .55; }
     .achievement.unlocked { opacity: 1; }
     .achievement strong { display: block; margin-bottom: 4px; }
     .achievement span { color: var(--muted); font-size: 11px; }
+    @media (max-width: 760px) { .achievements { grid-template-columns: repeat(2,minmax(0,1fr)); } }
     @media (max-width: 620px) { .achievements { grid-template-columns: 1fr; } .actions .btn { min-height: 40px; } }
     @media (prefers-reduced-motion: reduce) {
       *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
@@ -485,7 +486,7 @@
         </div>
       </article>
       <article class="card wide">
-        <div class="status-row"><p class="eyebrow">useless achievements</p><span class="small" id="achievementCount">0 / 5 unlocked</span></div>
+        <div class="status-row"><p class="eyebrow">useless achievements</p><span class="small" id="achievementCount">0 / 6 unlocked</span></div>
         <div class="achievements" id="achievementList"></div>
       </article>
     </section>
@@ -563,13 +564,14 @@
       ["repeat-offender", "Repeat Offender", "Return to the site."],
       ["procrastinator", "Professional Procrastinator", "Stay for 2 minutes."],
       ["designer", "Terrible Designer", "Reach maximum chaos."],
-      ["curious", "Curiosity Killed Nothing", "Find and click the secret three times."]
+      ["curious", "Curiosity Killed Nothing", "Find and click the secret three times."],
+      ["indecisive", "Indecisive", "Switch the lights three times."]
     ];
     let stored = [];
     try { stored = JSON.parse(safeStorage.getItem("uselessAchievements") || "[]"); } catch {}
     const unlocked = new Set(Array.isArray(stored) ? stored : []);
     function renderAchievements() {
-      document.getElementById("achievementCount").textContent = unlocked.size + " / 5 unlocked";
+      document.getElementById("achievementCount").textContent = unlocked.size + " / " + achievementDefs.length + " unlocked";
       const list = document.getElementById("achievementList");
       list.replaceChildren();
       achievementDefs.forEach(([id, name, hint]) => {
@@ -702,11 +704,16 @@
 
     document.getElementById("randomThought").onclick = randomThought;
 
+    let themeSwitches = Number(safeStorage.getItem("themeSwitchCount") || 0);
+    if (!Number.isFinite(themeSwitches) || themeSwitches < 0) themeSwitches = 0;
     themeToggle.onclick = () => {
       body.classList.toggle("dark");
       const dark = body.classList.contains("dark");
       themeToggle.textContent = dark ? "turn on the lights" : "turn off the lights";
       safeStorage.setItem("theme", dark ? "dark" : "light");
+      themeSwitches++;
+      safeStorage.setItem("themeSwitchCount", themeSwitches);
+      if (themeSwitches >= 3) unlock("indecisive");
     };
 
     if (safeStorage.getItem("theme") !== "light") {
@@ -786,6 +793,7 @@
     }
 
     if (clicks >= 10) unlock("bad-listener");
+    if (themeSwitches >= 3) unlock("indecisive");
     setTimeout(() => unlock("procrastinator"), 120000);
     setInterval(updateClock, 1000);
 
